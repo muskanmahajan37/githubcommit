@@ -33,7 +33,7 @@ class GitCommitHandler(IPythonHandler):
         data = json.loads(self.request.body.decode('utf-8'))
         filename = urllib.parse.unquote(data['filename'])
         msg = data['msg']
-        commit_only_source = data['commit_only_source']
+        # commit_only_source = data['commit_only_source']
 
 
         # get current directory (to return later)
@@ -57,9 +57,9 @@ class GitCommitHandler(IPythonHandler):
         # commit current notebook
         # client will sent pathname containing git directory; append to git directory's parent
         try:
-            if commit_only_source :
-                subprocess.run(['jupyter', 'nbconvert', '--to', 'script', str(os.environ.get('GIT_PARENT_DIR') + "/" + os.environ.get('GIT_REPO_NAME') + filename)])
-                filename = str(os.environ.get('GIT_PARENT_DIR') + "/" + os.environ.get('GIT_REPO_NAME') + filename.replace('ipynb', 'py'))
+            # if commit_only_source :
+            #     subprocess.run(['jupyter', 'nbconvert', '--to', 'script', str(os.environ.get('GIT_PARENT_DIR') + "/" + os.environ.get('GIT_REPO_NAME') + filename)])
+                # filename = str(os.environ.get('GIT_PARENT_DIR') + "/" + os.environ.get('GIT_REPO_NAME') + filename.replace('ipynb', 'py'))
             
             print(repo.git.add(str(os.environ.get('GIT_PARENT_DIR') + "/" + os.environ.get('GIT_REPO_NAME') + filename)))
             print(repo.git.commit( a=False, m="{}\n\nUpdated {}".format(msg, filename) ))
